@@ -2,7 +2,9 @@
 
 * [Строки](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#%D0%A1%D1%82%D1%80%D0%BE%D0%BA%D0%B8)
 * [Числа](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Числа)
-
+* [Объекты](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Объекты)
+* [Массивы](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Массивы)
+* [Булевые](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Булевые)
 
 ## Синтаксис
 
@@ -94,23 +96,34 @@
 => 4
 
 {{ product.price | money }}
-#=> 1 000 руб.
+=> 1 000 руб.
 
 {{ 2000 | money }}
-#=> 2 000 руб.
+=> 2 000 руб.
 
 {{ product.price | money | prepend: 'Цена: ' }}
-#=> Цена: 1 000 руб.
+=> Цена: 1 000 руб.
 ```
 
 ### Объекты
 
 Объекты это структура данных похожая на ассоциативные массивы. Значение объектов можно получить по ключу.
 
+> Практически все выводимые из бэк-офиса данные заключаются в объекты. Например account, product, blog и т.д..
+
 ```twig
 {{ объект.ключ.значение }}
 {{ объект.ключ.ключ.значение }}
 
+{{ account.phone }}
 {{ product.title }}
 {{ product.properties.handle.characteristics.first.name }}
+```
+
+> Объекты могут быть итерируемыми
+
+```twig
+{% for property in product.properties %}
+  {{property.name}}: {% for item in property.characteristics %}{{item.name}},{% endfor %}
+{% endfor %}
 ```
