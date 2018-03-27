@@ -1,5 +1,8 @@
 # Синтаксис и переменные liquid
 
+* [Строки](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#%D0%A1%D1%82%D1%80%D0%BE%D0%BA%D0%B8)
+* [Числа](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Числа)
+
 
 ## Синтаксис
 
@@ -15,6 +18,8 @@
 ### Строки
 
 > Строками могут быть текстовые поля бэк-офиса, поля содержащие html разметку, поля типа `select` и так далее.
+
+> [Строки в списке отмечены лейблами - string,html](http://liquidhub.ru/collection/shpargalka-liquid)
 
 ```twig
 {{ title }} - название магазина
@@ -75,4 +80,37 @@
 {% if new_string.size == 0 %}
   Строка пуста
 {% endif %}
+```
+
+### Числа
+
+Числами могут быть id, цены, количество и т.д.
+
+Помимо математических операций числа можно подставлять в строки.
+
+```twig
+{% assign number = 2 %}
+{{ number | plus: 2 }}
+=> 4
+
+{{ product.price | money }}
+#=> 1 000 руб.
+
+{{ 2000 | money }}
+#=> 2 000 руб.
+
+{{ product.price | money | prepend: 'Цена: ' }}
+#=> Цена: 1 000 руб.
+```
+
+### Объекты
+
+Объекты это структура данных похожая на ассоциативные массивы. Значение объектов можно получить по ключу.
+
+```twig
+{{ объект.ключ.значение }}
+{{ объект.ключ.ключ.значение }}
+
+{{ product.title }}
+{{ product.properties.handle.characteristics.first.name }}
 ```
