@@ -97,9 +97,27 @@ forloop.last        # => последняя итерация?
 Capture объединяет несколько переменных в одну строку
 
 ```
+{% capture my_var %}<p>Первая строка</p>{% endcapture %}
+{% capture my_var %}<p>Вторая строка</p>{% endcapture %}
+{{ my_var }}
+=> <p>Вторая строка</p>
+
+{% capture my_var %}<p>Первая строка</p>{% endcapture %}
+{% capture my_var %}{{ my_var }}<p>Вторая строка</p>{% endcapture %}
+{{ my_var }}
+=> <p>Первая строка</p>
+=> <p>Вторая строка</p>
+
+
 {% assign array = 'первый второй третий' | split: ' ' %}
 {% for item in array %}
     {% capture text_array %}[{{ item }}]{% endcapture %}
+{% endfor %}
+{{ text_array }} => [третий]
+
+{% assign array = 'первый второй третий' | split: ' ' %}
+{% for item in array %}
+  {% capture text_array %}{{ text_array }}[{{ item }}]{% endcapture %}
 {% endfor %}
 {{ text_array }} => [первый][второй][третий]
 ```
