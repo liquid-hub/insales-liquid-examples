@@ -6,7 +6,10 @@
 * [Комментарии](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Комментарии)
 * [Цикл For](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Цикл-For)
 * [Чередование Cycle](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Чередование-Cycle)
+* [Capture](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Capture)
 * [Include](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Include)
+* [raw](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#raw)
+* [Help - аналог var_dump](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Help---аналог-var_dump)
 
 В шаблонизаторе есть 2 основные кострукции:
 
@@ -89,6 +92,18 @@ forloop.first       # => первая итерация?
 forloop.last        # => последняя итерация?
 ```
 
+## Capture
+
+Capture объединяет несколько переменных в одну строку
+
+```
+{% assign array = 'первый второй третий' | split: ' ' %}
+{% for item in array %}
+    {% capture text_array %}[{{ item }}]{% endcapture %}
+{% endfor %}
+{{ text_array }} => [первый][второй][третий]
+```
+
 ## Include
 Тег include позволяет вставлять сниппеты шаблона в произвольные места лайаута, шаблонов и других сниппетов.
 
@@ -97,6 +112,30 @@ forloop.last        # => последняя итерация?
 {% include 'header' %}
 При включении сниппета можно передать параметры через запятую
 {% include 'footer', show_phone: true %}
+```
+
+## raw
+
+Временно отключить обработку тегов, чтобы избежать конфликтов синтаксиса.
+
+```
+{% raw %}
+In Handlebars, {{ this }} will be HTML-escaped, but {{{ that }}} will not.
+{% endraw %}
+=>
+In Handlebars, {{ this }} will be HTML-escaped, but {{{ that }}} will not.
+```
+
+## Help - аналог var_dump
+
+Чтобы проверить доступность переменных в шаблоне, используйте тег {% help %}.
+
+```twig
+{% help %}
+{% help 'collections' %}
+{% for product in collection.products %}
+  {% help product%}
+{% endfor %}
 ```
 
 [<< Назад](https://github.com/liquid-hub/insales-liquid-examples/blob/master/readme.md)
