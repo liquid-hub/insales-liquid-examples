@@ -4,7 +4,7 @@
 * [Числа](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage1.md#Числа)
 * [Объекты](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage1.md#Объекты)
 * [Массивы](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage1.md#Массивы)
-* [Булевые](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage1.md#Булевые)
+* [Логический тип данных](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage1.md#Логический-тип-данных)
 
 ## Строки
 
@@ -158,6 +158,31 @@
   [{{ item }}][{{ forloop.index0 }}]
 {% endfor %}
 => [второй][0] [третий][1]
+```
+
+## Логический тип данных
+
+Логический тип данных, или булев тип, или булевый тип (от англ. Boolean или logical data type) — примитивный тип данных в информатике, принимающий два возможных значения, иногда называемых истиной (true) и ложью (false).
+
+```twig
+{% assign product_available = false %}
+{% if product_available %}
+  Товар доступен
+  {% else %}
+  Товар не доступен
+{% endif %}
+=> Товар не доступен
+```
+
+> К булевой переменной можно применить фильтр replace
+
+```twig
+{% assign product_available = true %}
+{{ product_available | replace: 'true', 'is-available' | replace: 'false', 'not-available' }}
+=> is-available
+{% assign product_available = false %}
+{{ product_available | replace: 'true', 'is-available' | replace: 'false', 'not-available' }}
+=> not-available
 ```
 
 [<< Назад](https://github.com/liquid-hub/insales-liquid-examples/blob/master/readme.md)
