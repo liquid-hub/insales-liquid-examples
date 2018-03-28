@@ -127,3 +127,48 @@
   {{property.name}}: {% for item in property.characteristics %}{{item.name}},{% endfor %}
 {% endfor %}
 ```
+
+### Массивы
+
+Массив это набор элементов расположенных в памяти непосредственно друг за другом, что позволяет обращаться к элементам по числовому индексу.
+
+```twig
+{% assign array = 'первый второй третий' | split: ' ' %}
+{{ array[0] }} => первый
+{{ array[1] }} => второй
+{{ array[2] }} => третий
+{{ array[3] }} => (ничего не выведет)
+
+{% for item in array %}
+  [{{ item }}][{{ forloop.index }}]
+{% endfor %}
+=> [первый][1] [второй][2] [третий][3]
+
+{% for item in array %}
+  [{{ item }}][{{ forloop.index0 }}]
+{% endfor %}
+=> [первый][0] [второй][1] [третий][2]
+```
+> Элементы массива можно сортировать по значениям элементов. Например по title
+
+```twig
+<!-- products title = "a", "b", "A", "B" -->
+{% assign products = collection.products | sort: 'title' %}
+{% for product in products %}
+  {{ product.title }}
+{% endfor %}
+
+#=> A B a b
+```
+
+> Итерирование можно сдвинуть параметром `offset` и ограничить параметром `limit`
+
+```twig
+{% assign array = 'первый второй третий четвертый' | split: ' ' %}
+{% for item in array limit: 1 offset: 1 %}
+  [{{ item }}][{{ forloop.index0 }}]
+{% endfor %}
+=> [второй][0] [третий][1]
+```
+
+[<< Назад](https://github.com/liquid-hub/insales-liquid-examples/blob/master/readme.md)
