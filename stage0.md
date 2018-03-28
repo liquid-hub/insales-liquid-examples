@@ -1,174 +1,102 @@
-# Синтаксис и переменные liquid
+# Конструкции
 
-* [Строки](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#%D0%A1%D1%82%D1%80%D0%BE%D0%BA%D0%B8)
-* [Числа](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Числа)
-* [Объекты](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Объекты)
-* [Массивы](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Массивы)
-* [Булевые](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Булевые)
+* [Фильтры](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Фильтры)
+* [Создание переменных](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Создание-переменных)
+* [Операторы сравнения](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Операторы-сравнения)
+* [Комментарии](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Комментарии)
+* [Цикл For](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Цикл-For)
+* [Чередование Cycle](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Чередование-Cycle)
+* [Include](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Include)
 
-## Синтаксис
-
-В шаблонизаторе есть 2 кострукции:
+В шаблонизаторе есть 2 основные кострукции:
 
 > {{ code }} - вывод информации
 
 > {% code %} - методы и теги
 
+## Фильтры
 
-## Типы переменных
-
-### Строки
-
-> Строками могут быть текстовые поля бэк-офиса, поля содержащие html разметку, поля типа `select` и так далее.
-
-> [Строки в списке отмечены лейблами - string,html](http://liquidhub.ru/collection/shpargalka-liquid)
+Фильтры преобразовывают выходные данные
 
 ```twig
-{{ title }} - название магазина
-
-{{ page.title }} - название страницы
-
-{{ product.title }} - название продукта
-
-{{ product.first_image.medium_url }} - ссылка изображение
-
-{% assign string_variable = 'Переменная с текстом' %}
-
-{{ string_variable }} - Локальная переменная
-
+Привет, {{ name | upcase }}! => Привет, ПОЛЬЗОВАТЕЛЬ!
+{{ 'sales' | append: '.jpg' }} => sales.jpg
 ```
 
-> Строки можно приводить к числам.
+## Создание переменных
 
 ```twig
-{% assign number = 220 %}
-{% assign string_number = '239' | times: 1 %}
-{% if string_number > number %}
-  Строка умноженная на 1 приводится к числу.
-  Данный код отработает
+{% assign new_var = 'Строка' %}
+{{ new_var }} => Строка
+{% assign new_var = 'СТРОКА' | downcase  %}
+{{ new_var }} => строка
+```
+
+## Операторы сравнения
+
+```twig
+{% assign product_price = 10 %}
+{% assign product_title = 'Телефон' %}
+{% if product_price > 9 %}
+  Дороже 9
+  {% else %}
+  Дешевле или равно 9
 {% endif %}
 
-{% assign string_number2 = '239' %}
-{% if string_number2 > number %}
-  Код выдаст ошибку при сравнении строки с числом.
-{% endif %}
+{% unless product_title contains 'Телефон' %}
+  Это не телефон
+  {% else %}
+  Это телефон  
+{% endunless %}
 ```
 
-> Из строки можно создать массив.
+## Комментарии
 
 ```twig
-{% assign string_for_array = '1|2|3|4' | split: '|' %}
-
-{% for i in string_for_array %}
-  {{ i }}
-{% endfor %}
-=> 1 2 3 4
-
-{% comment %}page.url = page/contacts{% endcomment %}
-{% assign page_handle = page.url | split: '/' | last %}
-{{ page_handle }}
-=> contacts
+{% comment %} закомментированный текст {% endcomment %}
 ```
 
-> К строке можно применить фильтр или метод size, таким образом можно проверить строку на пустоту
+## Чередование Cycle
 
 ```twig
-{% assign new_string = '' %}
+{% cycle 'odd', 'even' %}<br />
+{% cycle 'odd', 'even' %}<br />
+{% cycle 'odd', 'even' %}<br />
+{% cycle 'odd', 'even' %}
 
-{% if new_string == '' %}
-  Строка пуста
-{% endif %}
-
-{% if new_string.size == 0 %}
-  Строка пуста
-{% endif %}
+odd
+even
+odd
+even
 ```
 
-### Числа
-
-Числами могут быть id, цены, количество и т.д.
-
-Помимо математических операций числа можно подставлять в строки.
+## Цикл For
 
 ```twig
-{% assign number = 2 %}
-{{ number | plus: 2 }}
-=> 4
-
-{{ product.price | money }}
-=> 1 000 руб.
-
-{{ 2000 | money }}
-=> 2 000 руб.
-
-{{ product.price | money | prepend: 'Цена: ' }}
-=> Цена: 1 000 руб.
-```
-
-### Объекты
-
-Объекты это структура данных похожая на ассоциативные массивы. Значение объектов можно получить по ключу.
-
-> Практически все выводимые из бэк-офиса данные заключаются в объекты. Например account, product, blog и т.д..
-
-```twig
-{{ объект.ключ.значение }}
-{{ объект.ключ.ключ.значение }}
-
-{{ account.phone }}
-{{ product.title }}
-{{ product.properties.handle.characteristics.first.name }}
-```
-
-> Объекты могут быть итерируемыми
-
-```twig
-{% for property in product.properties %}
-  {{property.name}}: {% for item in property.characteristics %}{{item.name}},{% endfor %}
-{% endfor %}
-```
-
-### Массивы
-
-Массив это набор элементов расположенных в памяти непосредственно друг за другом, что позволяет обращаться к элементам по числовому индексу.
-
-```twig
-{% assign array = 'первый второй третий' | split: ' ' %}
-{{ array[0] }} => первый
-{{ array[1] }} => второй
-{{ array[2] }} => третий
-{{ array[3] }} => (ничего не выведет)
-
 {% for item in array %}
-  [{{ item }}][{{ forloop.index }}]
+  {{ item }}
 {% endfor %}
-=> [первый][1] [второй][2] [третий][3]
-
-{% for item in array %}
-  [{{ item }}][{{ forloop.index0 }}]
-{% endfor %}
-=> [первый][0] [второй][1] [третий][2]
 ```
-> Элементы массива можно сортировать по значениям элементов. Например по title
+> При обходе массива доступны дополнительные переменные:
 
-```twig
-<!-- products title = "a", "b", "A", "B" -->
-{% assign products = collection.products | sort: 'title' %}
-{% for product in products %}
-  {{ product.title }}
-{% endfor %}
-
-#=> A B a b
+```
+forloop.length      # => количество элементов в массиве
+forloop.index       # => номер текущей итерации
+forloop.index0      # => номер текущей итерации (считая от нуля)
+forloop.rindex      # => сколько элементов осталось
+forloop.rindex0     # => сколько элементов осталось (считая от нуля)
+forloop.first       # => первая итерация?
+forloop.last        # => последняя итерация?
 ```
 
-> Итерирование можно сдвинуть параметром `offset` и ограничить параметром `limit`
+## Include
+Тег include позволяет вставлять сниппеты шаблона в произвольные места лайаута, шаблонов и других сниппетов.
 
 ```twig
-{% assign array = 'первый второй третий четвертый' | split: ' ' %}
-{% for item in array limit: 1 offset: 1 %}
-  [{{ item }}][{{ forloop.index0 }}]
-{% endfor %}
-=> [второй][0] [третий][1]
+{% include 'head' %}
+{% include 'header' %}
+При включении сниппета можно передать параметры через запятую
+{% include 'footer', show_phone: true %}
 ```
 
 [<< Назад](https://github.com/liquid-hub/insales-liquid-examples/blob/master/readme.md)
