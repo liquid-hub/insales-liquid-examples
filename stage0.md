@@ -115,11 +115,10 @@ Capture объединяет несколько переменных в одну
 {% endfor %}
 {{ text_array }} => [третий]
 
-{% assign array = 'первый второй третий' | split: ' ' %}
 {% for item in array %}
-  {% capture text_array %}{{ text_array }}[{{ item }}]{% endcapture %}
+  {% capture text_array2 %}{{ text_array2 }}[{{ item }}]{% endcapture %}
 {% endfor %}
-{{ text_array }} => [первый][второй][третий]
+{{ text_array2 }} => [первый][второй][третий]
 ```
 
 ## Include
