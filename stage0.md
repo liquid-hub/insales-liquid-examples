@@ -9,7 +9,7 @@
 * [Capture](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Capture)
 * [Include](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Include)
 * [raw](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#raw)
-* [Help - аналог var_dump](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#Help---аналог-var_dump)
+* [Help - аналог var_dump](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md#help---аналог-var_dump)
 
 В шаблонизаторе есть 2 основные кострукции:
 
