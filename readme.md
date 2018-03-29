@@ -5,6 +5,10 @@
 * [Конструкции](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage0.md)
 * [Типы переменных](https://github.com/liquid-hub/insales-liquid-examples/blob/master/stage1.md)
 
+## Видео :arrow_forward:
+
+* [Конструкции](https://www.youtube.com/watch?v=AXHdXvJF3U4)
+
 ## Полезные ссылки
 
 * [[ATOM] Подсветка синтаксиса и сниппеты ](https://atom.io/packages/language-liquid-insales)
