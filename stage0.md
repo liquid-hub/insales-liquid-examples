@@ -24,6 +24,15 @@
 ```twig
 Привет, {{ name | upcase }}! => Привет, ПОЛЬЗОВАТЕЛЬ!
 {{ 'sales' | append: '.jpg' }} => sales.jpg
+
+<link href="{{ 'shop.css' | asset_url }}" rel="stylesheet" type="text/css" />
+=> <link href="//assets3.insales.ru/assets/1/7120/23504/v_1479117076/build/shop.css" rel="stylesheet" type="text/css" />
+
+<img src="{{ 'image.png' | file_url }}" alt="Изображение из раздела файлов">
+=> <img src="https://static-eu.insales.ru/files/1/7105/3611585/original/image.png" alt="Изображение из раздела файлов">
+
+Получить дату
+{{ 'now' | date: "%Y" }}
 ```
 
 ## Создание переменных
